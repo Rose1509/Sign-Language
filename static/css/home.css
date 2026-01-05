@@ -11,7 +11,13 @@ body {
     overflow-x: hidden; /* Important for the curve overflow */
 }
 
-
+:root {
+    --navy: #1a2b4b;
+    --light-blue: #bae6fd;
+    --white: #F5F7FB;
+    --bg-gray: #f8fafc;
+    --hover-gray: #F5F7FB; 
+}
 
 .nav-item:hover {
     color: #1a2e4c;
@@ -268,7 +274,7 @@ body {
 .hero-character {
     position: absolute;
     right: -4%;
-    bottom: 4px;
+    bottom: 41px;
     width: 350px;
     z-index: 5;
     filter: drop-shadow(0 10px 15px rgba(0,0,0,0.2));
@@ -277,7 +283,7 @@ body {
 /* --- FEATURE SECTION --- */
 .section-title {
     text-align: center;
-    padding: 140px 0 60px; /* Space for the floating button */
+    padding: 65px 0 25px; /* Space for the floating button */
     color: #1a2e4c;
     font-size: 2.2rem;
     font-weight: 800;
@@ -291,7 +297,7 @@ body {
 .feature-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 40px;
+    gap: 60px;
     margin-bottom: 80px;
     justify-items: center;
 }
@@ -302,8 +308,8 @@ body {
     border-radius: 35px;
     padding: 35px 25px;
     text-align: center;
-    width: 100%;
-    max-width: 280px;
+    width:300px;
+    height:400px;
     position: relative;
     transition: all 0.3s ease;
     
@@ -357,6 +363,7 @@ body {
 .action-row {
     display: flex;
     justify-content: center;
+    margin-left: 250px;
     align-items: center;
     gap: 60px;
     flex-wrap: wrap;

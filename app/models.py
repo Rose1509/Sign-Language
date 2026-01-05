@@ -1,14 +1,15 @@
-from sqlalchemy import Column, Integer, String, Boolean
-from database import Base
+# app/models.py
+
+from sqlalchemy import Column, Integer, String
+from .database import Base, engine  # import engine from database.py
 
 class User(Base):
-    __tablename__ = "users"
+    __tablename__ = "register"  # match your PostgreSQL table
 
     id = Column(Integer, primary_key=True, index=True)
-    email = Column(String, unique=True, index=True, nullable=False)
-    username = Column(String, unique=True, index=True, nullable=False)
-    password = Column(String, nullable=False)  # Hashed password
-    is_active = Column(Boolean, default=True)
+    email = Column(String(255), unique=True, index=True, nullable=False)
+    username = Column(String(50), unique=True, index=True, nullable=False)
+    password = Column(String(255), nullable=False)
 
-    def __repr__(self):
-        return f"<User(id={self.id}, username={self.username}, email={self.email})>"
+# Correct way to create tables
+Base.metadata.create_all(bind=engine)

@@ -34,6 +34,11 @@
                 <input type="password" name="password" placeholder="Create Password" required>
                 <input type="password" name="confirm_password" placeholder="Confirm Password" required>
 
+                <!-- Error message placeholder -->
+                {% if error %}
+                    <p class="error-message">{{ error }}</p>
+                {% endif %}
+
                 <button type="submit" class="login-btn">Register Now</button>
             </form>
 
