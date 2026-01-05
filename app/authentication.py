@@ -38,7 +38,7 @@ class User(Base):
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, index=True)
-    full_name = Column(String(100))
+    email = Column(String(100))
     username = Column(String(50), unique=True, index=True)
     password = Column(String(255))
 
@@ -55,7 +55,7 @@ def get_db():
 # REGISTER
 @app.post("/register")
 def register(
-    full_name: str = Form(...),
+    email: str = Form(...),
     username: str = Form(...),
     password: str = Form(...),
     confirm_password: str = Form(...),
@@ -69,7 +69,7 @@ def register(
         raise HTTPException(status_code=400, detail="Username already exists")
 
     user = User(
-        full_name=full_name,
+        email=email,
         username=username,
         password=hash_password(password)
     )

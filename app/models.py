@@ -5,10 +5,10 @@ class User(Base):
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, index=True)
-    full_name = Column(String, nullable=False)
+    email = Column(String, unique=True, index=True, nullable=False)
     username = Column(String, unique=True, index=True, nullable=False)
     password = Column(String, nullable=False)  # Hashed password
     is_active = Column(Boolean, default=True)
 
     def __repr__(self):
-        return f"<User(id={self.id}, username={self.username}, full_name={self.full_name})>"
+        return f"<User(id={self.id}, username={self.username}, email={self.email})>"

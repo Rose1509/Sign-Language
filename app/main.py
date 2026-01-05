@@ -52,7 +52,7 @@ def register_form(request: Request):
 
 @app.post("/register", response_class=HTMLResponse)
 def register_submit(
-    full_name: str = Form(...),
+    email: str = Form(...),
     username: str = Form(...),
     password: str = Form(...),
     confirm_password: str = Form(...),
@@ -62,4 +62,5 @@ def register_submit(
         return HTMLResponse(content="Passwords do not match!", status_code=400)
 
     # Placeholder for success message
-    return HTMLResponse(content=f"User {username} registered successfully!", status_code=200)
+    return HTMLResponse(content=f"User {username} with email {email} registered successfully!", status_code=200)
+
