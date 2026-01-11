@@ -56,6 +56,15 @@ def login_form(request: Request):
 def register_form(request: Request):
     return templates.TemplateResponse("register.html", {"request": request, "error": None})
 
+@app.get("/about", response_class=HTMLResponse)
+def about_us(request: Request):
+    return templates.TemplateResponse("about_us.html", {"request": request})
+
+@app.get("/contact", response_class=HTMLResponse)
+def contact_us(request: Request):
+    return templates.TemplateResponse("contact_us.html", {"request": request})
+
+
 # -------------------------
 # Routes - POST Register
 # -------------------------
@@ -108,4 +117,4 @@ def login_submit(
         )
     response = RedirectResponse(url="/home", status_code=303)
     return response
-    
+
