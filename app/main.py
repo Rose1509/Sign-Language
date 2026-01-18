@@ -64,6 +64,15 @@ def about_us(request: Request):
 def contact_us(request: Request):
     return templates.TemplateResponse("contact_us.html", {"request": request})
 
+@app.get("/profile", response_class=HTMLResponse)
+def profile_page(request: Request):
+    return templates.TemplateResponse("profile.html", {"request": request})
+
+@app.get("/logout")
+def logout(request: Request):
+    request.session.clear()
+    return RedirectResponse(url="/login", status_code=303)
+
 
 # -------------------------
 # Routes - POST Register

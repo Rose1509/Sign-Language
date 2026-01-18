@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us - Gesture Lab</title>
-    <link rel="stylesheet" href="/static/css/about_us.css">
+    <title>My Profile - Gesture Lab</title>
+    <link rel="stylesheet" href="/static/css/profile.css">
     <link rel="stylesheet" href="/static/css/header.css">
     <link rel="stylesheet" href="/static/css/footer.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 
@@ -16,7 +17,7 @@
         </div>
 
         <div class="nav-links">
-            <a href="/home" class="nav-item active">
+            <a href="/home" class="nav-item">
                 <div class="icon-container">
                     <img src="/static/images/homepage.png" alt="Home" class="nav-icon">
                 </div>
@@ -40,7 +41,7 @@
                 </div>
                 <span>Quizzes</span>
             </a>
-            <a href="/profile" class="nav-item">
+            <a href="/profile" class="nav-item active">
                 <div class="icon-container">
                     <img src="/static/images/profilepage.png" alt="Profile" class="nav-icon">
                 </div>
@@ -55,46 +56,64 @@
         </a>
     </nav>
 
-    <main class="about-container">
-        <h1 class="about-title">About Us</h1>
+    <main class="profile-container">
+        <header class="profile-header">
+            <h1>My Profile</h1>
+            <p>Manage your account and track your progress</p>
+        </header>
 
-        <div class="about-grid">
-            <div class="about-text-column">
-                <section class="about-card">
-                    <h2>About Gesture Lab</h2>
-                    <p>Gesture Lab is a revolutionary platform dedicated to making sign language accessible and fun for everyone. We utilize cutting-edge AI technology to provide real-time feedback and personalized learning experiences, ensuring rapid and confident skill development.</p>
-                </section>
-
-                <section class="about-card">
-                    <h2>Our Mission</h2>
-                    <p>Our mission is to bridge communication gaps by empowering millions to learn sign language. We strive to create an inclusive, supportive, and highly effective learning environment that connects people across communities.</p>
-                </section>
-
-                <section class="about-card start-today">
-                    <h2>Get Started Today!</h2>
-                    <p>Ready to start communicating? Join thousands of happy learners and begin your journey into sign language today.</p>
-                    <button class="btn-primary-dark">Start Learning Now</button>
-                </section>
-            </div>
-
-            <div class="about-visual-column">
-                <div class="about-image-box">
-                    <img src="/static/images/logo.png" alt="Sign Language Demonstration">
+        <section class="profile-card">
+            <h2>Personal Information</h2>
+            <p class="subtitle">Update your personal details</p>
+            
+            <form class="profile-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" placeholder="Enter full name">
+                    </div>
+                    <div class="form-group">
+                        <label>User Name</label>
+                        <input type="text" placeholder="Enter username">
+                    </div>
                 </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>New Password</label>
+                        <input type="password" placeholder="••••••••">
+                    </div>
+                    <div class="form-group">
+                        <label>Confirm Password</label>
+                        <input type="password" placeholder="••••••••">
+                    </div>
+                </div>
+                <button type="submit" class="save-btn">SAVE CHANGES</button>
+            </form>
+        </section>
 
-                <div class="features-sidebar-card">
-                    <h2>Key Features</h2>
-                    <ul class="features-list">
-                        <li><span class="icon">🚀</span> AI powered Feedbacks</li>
-                        <li><span class="icon">🏃</span> Comprehensive learning paths</li>
-                        <li><span class="icon">⏱️</span> Practice tools</li>
-                        <li><span class="icon">📈</span> Progress Tracking</li>
-                    </ul>
+        <section class="profile-card">
+            <h2>Progress Dashboard</h2>
+            <p class="subtitle">Your learning statistics</p>
+
+            <div class="stats-grid">
+                <div class="stat-item blue">
+                    <i class="fa-solid fa-trophy"></i>
+                    <span class="stat-value">0</span>
+                    <span class="stat-label">Total Points</span>
+                </div>
+                <div class="stat-item orange">
+                    <i class="fa-solid fa-award"></i>
+                    <span class="stat-value">0</span>
+                    <span class="stat-label">Badges</span>
+                </div>
+                <div class="stat-item green">
+                    <i class="fa-solid fa-chart-column"></i>
+                    <span class="stat-value">0</span>
+                    <span class="stat-label">Quizzes Taken</span>
                 </div>
             </div>
-        </div>
+        </section>
     </main>
-
     <footer class="main-footer">
         <div class="footer-container">
 
