@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gesture Lab | Quizzes</title>
+    <link rel="stylesheet" href="/static/css/quizzes.css">
+    <link rel="stylesheet" href="/static/css/header.css">
+    <link rel="stylesheet" href="/static/css/footer.css">    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="/static/images/logo.png" alt="ASL Logo">
+        </div>
+
+        <div class="nav-links">
+            <a href="/home" class="nav-item">
+                <div class="icon-container">
+                    <img src="/static/images/homepage.png" alt="Home" class="nav-icon">
+                </div>
+                <span>Home</span>
+            </a>
+            <a href="/lessons" class="nav-item">
+                <div class="icon-container">
+                    <img src="/static/images/lesson.png" alt="Lessons" class="nav-icon">
+                </div>
+                <span>Lessons</span>
+            </a>
+            <a href="/practice" class="nav-item">
+                <div class="icon-container">
+                    <img src="/static/images/practice.png" alt="Practice" class="nav-icon">
+                </div>
+                <span>Practice</span>
+            </a>
+            <a href="/quizzes" class="nav-item active">
+                <div class="icon-container">
+                    <img src="/static/images/quizzes.png" alt="Quizzes" class="nav-icon">
+                </div>
+                <span>Quizzes</span>
+            </a>
+            <a href="/profile" class="nav-item">
+                <div class="icon-container">
+                    <img src="/static/images/profilepage.png" alt="Profile" class="nav-icon">
+                </div>
+                <span>Profile</span>
+            </a>
+        </div>
+
+        <a href="/login" class="action-btn" aria-label="Logout">
+            <div class="arrow-box">
+                <img src="/static/images/log-out.png" alt="Logout" class="arrow-icon">
+            </div>
+        </a>
+    </nav>
+
+    <main class="quiz-container">
+        <header class="quiz-intro">
+            <h1>Quizzes</h1>
+            <p>Test your knowledge. Take quizzes to earn points and badges</p>
+        </header>
+
+        <section class="quiz-content">
+            <h2 class="list-title">Quiz Lists</h2>
+            
+            <div class="card-grid">
+                <div class="quiz-card">
+                    <div class="card-image">
+                        <img src="/static/images/hello.png" alt="Alphabet A-I">
+                    </div>
+                    <h3>The Alphabet Basics</h3>
+                    <span class="level">Beginner</span>
+                    <a href="/beginner" class="btn-start">Start Quiz</a>                
+                </div>
+
+                <div class="quiz-card">
+                    <div class="card-image">
+                        <img src="/static/images/hello.png" alt="Alphabet J-T">
+                    </div>
+                    <h3>The Alphabet Basics</h3>
+                    <span class="level">Intermediate</span>
+                    <a href="/intermediate" class="btn-start">Start Quiz</a>
+                </div>
+
+                <div class="quiz-card">
+                    <div class="card-image">
+                        <img src="/static/images/hello.png" alt="Alphabet U-Z">
+                    </div>
+                    <h3>The Alphabet Basics</h3>
+                    <span class="level">Advance</span>
+                    <a href="/advance" class="btn-start">Start Quiz</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-container">
+
+            <!-- Brand -->
+            <div class="footer-brand">
+                <h2 class="footer-logo">Gesture Lab</h2>
+            </div>
+
+            <!-- Links -->
+            <nav class="footer-links">
+                <div class="link-column">
+                    <h3>Learn</h3>
+                    <ul>
+                        <li><a href="#">Basics</a></li>
+                        <li><a href="#">Finger-Spelling</a></li>
+                        <li><a href="#">Everyday Signs</a></li>
+                        <li><a href="#">Conversation Packs</a></li>
+                        <li><a href="#">Advanced Lessons</a></li>
+                    </ul>
+                </div>
+
+                <div class="link-column">
+                    <h3>Practice</h3>
+                    <ul>
+                        <li><a href="#">AI Gesture Practice</a></li>
+                        <li><a href="#">Mini Games</a></li>
+                        <li><a href="#">Speed Drills</a></li>
+                        <li><a href="#">Scenario Practice</a></li>
+                        <li><a href="#">Progress Dashboard</a></li>
+                    </ul>
+                </div>
+
+                <div class="link-column">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Use</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 Gesture Lab. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

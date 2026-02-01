@@ -68,6 +68,22 @@ def contact_us(request: Request):
 def profile_page(request: Request):
     return templates.TemplateResponse("profile.html", {"request": request})
 
+@app.get("/quizzes", response_class=HTMLResponse)
+def quizzes_page(request: Request):
+    return templates.TemplateResponse("quizzes.html", {"request": request})
+
+@app.get("/beginner", response_class=HTMLResponse)
+def beginner_quiz(request: Request):
+    return templates.TemplateResponse("beginner.html", {"request": request})
+
+@app.get("/intermediate", response_class=HTMLResponse)
+def intermediate_quiz(request: Request):
+    return templates.TemplateResponse("intermediate.html", {"request": request})
+
+@app.get("/advance", response_class=HTMLResponse)
+def advance_quiz(request: Request):
+    return templates.TemplateResponse("advance.html", {"request": request})
+
 @app.get("/logout")
 def logout(request: Request):
     request.session.clear()
