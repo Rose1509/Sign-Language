@@ -84,6 +84,18 @@ def intermediate_quiz(request: Request):
 def advance_quiz(request: Request):
     return templates.TemplateResponse("advance.html", {"request": request})
 
+@app.get("/lessons", response_class=HTMLResponse)
+def lessons_page(request: Request):
+    return templates.TemplateResponse("lessons.html", {"request": request})
+
+@app.get("/intermediatee", response_class=HTMLResponse)
+def intermediate_lessons_page(request: Request):
+    return templates.TemplateResponse("intermediatee.html", {"request": request})
+
+@app.get("/advancee", response_class=HTMLResponse)
+def advance_lessons_page(request: Request):
+    return templates.TemplateResponse("advancee.html", {"request": request})
+
 @app.get("/logout")
 def logout(request: Request):
     request.session.clear()
