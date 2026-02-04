@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gesture Lab Admin Dashboard</title>
+    <link rel="stylesheet" href="/static/css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="container">
+        <aside class="sidebar">
+            <div class="logo">
+                <img src="/static/images/logo_white.png" alt="Logo">
+            </div>
+            <nav>
+                <ul>
+                    <li class="active"><a href="#">Dashboard</a></li>
+                    <li><a href="#">Lessons</a></li>
+                    <li><a href="#">Quizzes</a></li>
+                </ul>
+            </nav>
+            <div class="logout">
+                <a href="#"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header>
+                <div class="header-text">
+                    <h1>Dashboard</h1>
+                    <p>Welcome back to Gesture Lab admin panel</p>
+                </div>
+                <div class="header-actions">
+                    <a href="add_lessons.html" style="text-decoration: none;">
+                        <button class="btn-add">Add Lessons</button>
+                    </a>
+
+                    <a href="admin_profile.html" class="user-profile-link">
+                        <div class="user-profile-icon">
+                            <i class="far fa-user-circle"></i>
+                        </div>
+                    </a>
+                </div>
+            </header>
+
+            <section class="stats-container">
+                <div class="card card-blue">
+                    <i class="fas fa-question-circle"></i>
+                    <h2>5</h2>
+                    <p>Quizzes</p>
+                </div>
+                <div class="card card-orange">
+                    <i class="fas fa-award"></i>
+                    <h2>15</h2>
+                    <p>Lessons</p>
+                </div>
+                <div class="card card-green">
+                    <i class="fas fa-chart-bar"></i>
+                    <h2>23</h2>
+                    <p>Users</p>
+                </div>
+            </section>
+
+            <section class="user-management">
+                <h3>User Management</h3>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>User Name</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Rose Khatiwada</td>
+                                <td>rosek27</td>
+                                <td><i class="fas fa-trash-alt delete-icon"></i></td>
+                            </tr>
+                            <tr>
+                                <td>Rose Khatiwada</td>
+                                <td>rosek27</td>
+                                <td><i class="fas fa-trash-alt delete-icon"></i></td>
+                            </tr>
+                            <tr>
+                                <td>Rose Khatiwada</td>
+                                <td>rosek27</td>
+                                <td><i class="fas fa-trash-alt delete-icon"></i></td>
+                            </tr>
+                            <tr>
+                                <td>Rose Khatiwada</td>
+                                <td>rosek27</td>
+                                <td><i class="fas fa-trash-alt delete-icon"></i></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="table-footer">
+                        <button class="btn-update">Update User</button>
+                    </div>
+                </div>
+            </section>
+
+            <footer>
+                <p>&copy; 2025 GestureLab. All rights reserved.</p>
+            </footer>
+        </main>
+    </div>
+
+</body>
+</html>

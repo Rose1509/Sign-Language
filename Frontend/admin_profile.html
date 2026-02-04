@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gesture Lab Admin Dashboard</title>
+    <link rel="stylesheet" href="/static/css/admin_profile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+
+        <aside class="sidebar">
+            <div class="logo">
+                <img src="/static/images/logo_white.png" alt="Logo">
+            </div>
+
+            <nav>
+                <ul>
+                    <li><a href="/dashboard">Dashboard</a></li>
+                    <li><a href="#">Lessons</a></li>
+                    <li><a href="#">Quizzes</a></li>
+                </ul>
+            </nav>
+
+            <div class="logout">
+                <a href="#"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="dashboard-header">
+                <div class="header-text">
+                    <h1>Profile</h1>
+                    <p>Manage your account here</p>
+                </div>
+                <div class="header-actions">
+                    <a href="/add-lessons" class="btn-add">Add Lessons</a>
+                    
+                    <a href="admin_profile.html" class="user-profile-link">
+                        <div class="user-profile-icon">
+                            <i class="far fa-user-circle"></i>
+                        </div>
+                    </a>
+                </div>
+            </header>
+
+            <section class="profile-card">
+                <h2 class="form-title">Personal Information</h2>
+                <p class="form-subtitle">Update your personal details</p>
+
+                <div class="profile-layout">
+                    <div class="image-section">
+                        <div class="profile-image-wrapper">
+                            <img src="/static/images/admin.png" alt="Profile Picture">
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <div class="input-group">
+                            <label>Full Name</label>
+                            <input type="text" value="Rose Khatiwada">
+                        </div>
+
+                        <div class="input-group">
+                            <label>User Name</label>
+                            <input type="text" value="rosek27">
+                        </div>
+
+                        <div class="input-group">
+                            <label>New Password</label>
+                            <input type="password" placeholder="••••••••">
+                        </div>
+
+                        <div class="input-group">
+                            <label>Confirm Password</label>
+                            <input type="password" placeholder="••••••••">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-footer">
+                    <button class="btn-save">SAVE CHANGES</button>
+                </div>
+            </section>
+
+            <footer class="main-footer">
+                <p>&copy; 2025 GestureLab. All rights reserved.</p>
+            </footer>
+
+        </main>
+    </div>
+</body>
+</html>

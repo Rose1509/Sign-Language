@@ -96,6 +96,14 @@ def intermediate_lessons_page(request: Request):
 def advance_lessons_page(request: Request):
     return templates.TemplateResponse("advancee.html", {"request": request})
 
+@app.get("/dashboard", response_class=HTMLResponse)
+def dashboard_page(request: Request):
+    return templates.TemplateResponse("dashboard.html", {"request": request})
+
+@app.get("/admin_profile", response_class=HTMLResponse)
+def admin_profile_page(request: Request):
+    return templates.TemplateResponse("admin_profile.html", {"request": request})
+
 @app.get("/logout")
 def logout(request: Request):
     request.session.clear()

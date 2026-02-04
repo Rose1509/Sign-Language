@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lessons - Gesture Lab</title>
+    <link rel="stylesheet" href="/static/css/add_lessons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="logo">
+                <img src="/static/images/logo_white.png" alt="Logo">
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="dashboard.html">Dashboard</a></li>
+                    <li class="active"><a href="lessons.html">Lessons</a></li>
+                    <li><a href="quizzes.html">Quizzes</a></li>
+                </ul>
+            </nav>
+            <div class="logout">
+                <a href="#"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="dashboard-header">
+                <div class="header-text">
+                    <h1>Lessons</h1>
+                    <p>Manage Your Lessons here</p>
+                </div>
+                <div class="header-actions">
+                    <a href="admin_profile.html" class="user-profile-link">
+                        <div class="user-profile-icon">
+                            <i class="far fa-user-circle"></i>
+                        </div>
+                    </a>
+                </div>
+            </header>
+
+            <section class="table-container">
+                <table class="lessons-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Image</th>
+                            <th>Heading</th>
+                            <th>Description</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Aa</td>
+                            <td><img src="sign-image.png" alt="sign" class="sign-img"></td>
+                            <td>How to sign</td>
+                            <td class="description-cell">
+                                1. Make a fist with your dominant hand...<br>
+                                2. Keep your thumb on the side...
+                            </td>
+                            <td><i class="fas fa-trash delete-icon"></i></td>
+                        </tr>
+                        </tbody>
+                </table>
+            </section>
+
+            <section class="add-section-card">
+                <h2 class="section-title">Add new signs</h2>
+                <div class="form-grid">
+                    <div class="input-group">
+                        <label>Sign Level</label>
+                        <input type="text">
+                    </div>
+                    <div class="input-group">
+                        <label>Name</label>
+                        <input type="text">
+                    </div>
+                    <div class="input-group">
+                        <label>Image</label>
+                        <input type="text">
+                    </div>
+                    <div class="input-group">
+                        <label>Heading</label>
+                        <input type="text">
+                    </div>
+                    <div class="input-group description-input">
+                        <label>Description</label>
+                        <input type="text">
+                    </div>
+                    <div class="form-buttons">
+                        <button class="btn-dark">Add Lessons</button>
+                        <button class="btn-dark">Update Lessons</button>
+                    </div>
+                </div>
+            </section>
+
+            <footer class="main-footer">
+                <p>&copy; 2025 GestureLab. All rights reserved.</p>
+            </footer>
+        </main>
+    </div>
+</body>
+</html>
