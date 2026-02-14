@@ -18,13 +18,13 @@
             <nav>
                 <ul>
                     <li><a href="/dashboard">Dashboard</a></li>
-                    <li><a href="#">Lessons</a></li>
-                    <li><a href="#">Quizzes</a></li>
+                    <li><a href="/add_lessons">Lessons</a></li>
+                    <li><a href="/add_quizzes">Quizzes</a></li>
                 </ul>
             </nav>
 
             <div class="logout">
-                <a href="#"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                <a href="/logout" onclick="return confirm('Are you sure you want to logout?')"><i class="fas fa-sign-out-alt"></i> Logout</a>
             </div>
         </aside>
 
@@ -35,9 +35,9 @@
                     <p>Manage your account here</p>
                 </div>
                 <div class="header-actions">
-                    <a href="/add-lessons" class="btn-add">Add Lessons</a>
+                    <a href="/add_lessons" class="btn-add">Add Lessons</a>
                     
-                    <a href="admin_profile.html" class="user-profile-link">
+                    <a href="/admin_profile" class="user-profile-link">
                         <div class="user-profile-icon">
                             <i class="far fa-user-circle"></i>
                         </div>
@@ -49,39 +49,59 @@
                 <h2 class="form-title">Personal Information</h2>
                 <p class="form-subtitle">Update your personal details</p>
 
-                <div class="profile-layout">
-                    <div class="image-section">
-                        <div class="profile-image-wrapper">
-                            <img src="/static/images/admin.png" alt="Profile Picture">
+                {% if error %}
+                <div style="background-color: #fee; color: #c33; padding: 10px; border-radius: 5px; margin-bottom: 20px;">
+                    {{ error }}
+                </div>
+                {% endif %}
+
+                {% if success %}
+                <div style="background-color: #efe; color: #3c3; padding: 10px; border-radius: 5px; margin-bottom: 20px;">
+                    {{ success }}
+                </div>
+                {% endif %}
+
+                <form method="post" action="/update_admin_profile" id="adminProfileForm">
+                    <div class="profile-layout">
+                        <div class="image-section">
+                            <div class="profile-image-wrapper">
+                                <img src="/static/images/admin.png" alt="Profile Picture">
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <div class="input-group">
+                                <label>Full Name</label>
+                                <input type="text" name="full_name" id="full_name" value="{{ admin.full_name if admin else 'Rose Khatiwada' }}" required>
+                            </div>
+
+                            <div class="input-group">
+                                <label>User Name</label>
+                                <input type="text" name="username" id="username" value="{{ admin.username if admin else 'Rose' }}" required>
+                            </div>
+
+                            <div class="input-group">
+                                <label>Email</label>
+                                <input type="email" name="email" id="email" value="{{ admin.email if admin else 'rkc123@gmail.com' }}" required>
+                            </div>
+
+                            <div class="input-group">
+                                <label>New Password</label>
+                                <input type="password" name="new_password" id="new_password" placeholder="Leave empty to keep current password">
+                                <small style="display: block; margin-top: 5px; color: #666;">Leave empty to keep current password</small>
+                            </div>
+
+                            <div class="input-group">
+                                <label>Confirm Password</label>
+                                <input type="password" name="confirm_password" id="confirm_password" placeholder="Leave empty to keep current password">
+                            </div>
                         </div>
                     </div>
 
-                    <div class="form-section">
-                        <div class="input-group">
-                            <label>Full Name</label>
-                            <input type="text" value="Rose Khatiwada">
-                        </div>
-
-                        <div class="input-group">
-                            <label>User Name</label>
-                            <input type="text" value="rosek27">
-                        </div>
-
-                        <div class="input-group">
-                            <label>New Password</label>
-                            <input type="password" placeholder="••••••••">
-                        </div>
-
-                        <div class="input-group">
-                            <label>Confirm Password</label>
-                            <input type="password" placeholder="••••••••">
-                        </div>
+                    <div class="form-footer">
+                        <button type="submit" class="btn-save">SAVE CHANGES</button>
                     </div>
-                </div>
-
-                <div class="form-footer">
-                    <button class="btn-save">SAVE CHANGES</button>
-                </div>
+                </form>
             </section>
 
             <footer class="main-footer">

@@ -49,7 +49,7 @@
             </a>
         </div>
 
-        <a href="/login" class="action-btn" aria-label="Logout">
+        <a href="/logout" class="action-btn" aria-label="Logout" onclick="return confirmLogout()">
             <div class="arrow-box">
                 <img src="/static/images/log-out.png" alt="Logout" class="arrow-icon">
             </div>
@@ -64,27 +64,40 @@
 
         <section class="profile-card">
             <h2>Personal Information</h2>
-            <p class="subtitle">Update your personal details</p>
+            <p class="subtitle">Update your login details</p>
+
+            {% if error %}
+            <div style="background-color: #fee; color: #c33; padding: 10px; border-radius: 5px; margin-bottom: 20px;">
+                {{ error }}
+            </div>
+            {% endif %}
+
+            {% if success %}
+            <div style="background-color: #efe; color: #3c3; padding: 10px; border-radius: 5px; margin-bottom: 20px;">
+                {{ success }}
+            </div>
+            {% endif %}
             
-            <form class="profile-form">
+            <form method="post" action="/update_user_profile" class="profile-form">
                 <div class="form-row">
                     <div class="form-group">
-                        <label>Full Name</label>
-                        <input type="text" placeholder="Enter full name">
+                        <label>User Name</label>
+                        <input type="text" name="username" id="username" value="{{ user.username if user else '' }}" required>
                     </div>
                     <div class="form-group">
-                        <label>User Name</label>
-                        <input type="text" placeholder="Enter username">
+                        <label>Email</label>
+                        <input type="email" name="email" id="email" value="{{ user.email if user else '' }}" required>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group">
                         <label>New Password</label>
-                        <input type="password" placeholder="••••••••">
+                        <input type="password" name="new_password" id="new_password" placeholder="Leave empty to keep current password">
+                        <small style="display: block; margin-top: 5px; color: #666;">Leave empty to keep current password</small>
                     </div>
                     <div class="form-group">
                         <label>Confirm Password</label>
-                        <input type="password" placeholder="••••••••">
+                        <input type="password" name="confirm_password" id="confirm_password" placeholder="Leave empty to keep current password">
                     </div>
                 </div>
                 <button type="submit" class="save-btn">SAVE CHANGES</button>
@@ -163,6 +176,15 @@
             <p>&copy; 2025 Gesture Lab. All rights reserved.</p>
         </div>
     </footer>
+
+    <script>
+        function confirmLogout() {
+            if (confirm('Are you sure you want to logout?')) {
+                return true;
+            }
+            return false;
+        }
+    </script>
 
 </body>
 </html>

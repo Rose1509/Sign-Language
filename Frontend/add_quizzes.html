@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quizzes - Gesture Lab</title>
+    <link rel="stylesheet" href="/static/css/add_lessons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="logo">
+                <img src="/static/images/logo_white.png" alt="Logo">
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="/dashboard">Dashboard</a></li>
+                    <li><a href="/add_lessons">Lessons</a></li>
+                    <li class="active"><a href="/add_quizzes">Quizzes</a></li>
+                </ul>
+            </nav>
+            <div class="logout">
+                <a href="/logout" onclick="return confirm('Are you sure you want to logout?')"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="dashboard-header">
+                <div class="header-text">
+                    <h1>Quizzes</h1>
+                    <p>Manage Your Quizzes here</p>
+                </div>
+                <div class="header-actions">
+                    <a href="/admin_profile" class="user-profile-link">
+                        <div class="user-profile-icon">
+                            <i class="far fa-user-circle"></i>
+                        </div>
+                    </a>
+                </div>
+            </header>
+
+            <section class="table-container">
+                <table class="lessons-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Level</th>
+                            <th>Question</th>
+                            <th>Question Image</th>
+                            <th>Correct Option</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if quizzes %}
+                            {% for quiz in quizzes %}
+                            <tr>
+                                <td>{{ quiz.id }}</td>
+                                <td>{{ quiz.level }}</td>
+                                <td class="description-cell">
+                                    {{ (quiz.question_text or '')[:80] }}{% if (quiz.question_text or '')|length > 80 %}...{% endif %}
+                                </td>
+                                <td>
+                                    {% if quiz.question_image %}
+                                        <img src="{{ quiz.question_image }}" alt="Question image" class="sign-img" style="max-width: 80px; max-height: 80px;">
+                                    {% else %}
+                                        -
+                                    {% endif %}
+                                </td>
+                                <td>{{ quiz.correct_option }}</td>
+                                <td>
+                                    <button class="edit-btn"
+                                            data-id="{{ quiz.id }}"
+                                            data-level="{{ quiz.level }}"
+                                            data-question_text="{{ quiz.question_text }}"
+                                            data-question_image="{{ quiz.question_image or '' }}"
+                                            data-option1_text="{{ quiz.option1_text or '' }}"
+                                            data-option2_text="{{ quiz.option2_text or '' }}"
+                                            data-option3_text="{{ quiz.option3_text or '' }}"
+                                            data-option4_text="{{ quiz.option4_text or '' }}"
+                                            data-option1_image="{{ quiz.option1_image or '' }}"
+                                            data-option2_image="{{ quiz.option2_image or '' }}"
+                                            data-option3_image="{{ quiz.option3_image or '' }}"
+                                            data-option4_image="{{ quiz.option4_image or '' }}"
+                                            data-correct_option="{{ quiz.correct_option }}">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+
+                                    <form method="post" action="/delete_quiz" style="display: inline;">
+                                        <input type="hidden" name="quiz_id" value="{{ quiz.id }}">
+                                        <button type="submit" class="delete-btn" onclick="return confirm('Are you sure you want to delete this quiz?')">
+                                            <i class="fas fa-trash delete-icon"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="6" style="text-align: center;">No quizzes found. Add your first quiz below!</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="add-section-card">
+                <h2 class="section-title">Add / Edit Quiz</h2>
+                <form method="post" action="/add_quiz" id="quizForm" enctype="multipart/form-data">
+                    <input type="hidden" name="quiz_id" id="quiz_id" value="">
+                    <input type="hidden" name="existing_question_image" id="existing_question_image" value="">
+                    <input type="hidden" name="existing_option1_image" id="existing_option1_image" value="">
+                    <input type="hidden" name="existing_option2_image" id="existing_option2_image" value="">
+                    <input type="hidden" name="existing_option3_image" id="existing_option3_image" value="">
+                    <input type="hidden" name="existing_option4_image" id="existing_option4_image" value="">
+
+                    <div class="form-grid">
+                        <!-- Step 1: Level Selection (Always Visible) -->
+                        <div class="input-group">
+                            <label>Quiz Level <span style="color: red;">*</span></label>
+                            <select name="level" id="level" required>
+                                <option value="">Select Level</option>
+                                <option value="Beginner">Beginner</option>
+                                <option value="Intermediate">Intermediate</option>
+                                <option value="Advance">Advance</option>
+                            </select>
+                            <small style="display: block; margin-top: 5px; color: #666;">Select a level to continue</small>
+                        </div>
+
+                        <!-- Question Section (Hidden until level selected; optional) -->
+                        <div class="input-group description-input quiz-field" id="question-section" style="display: none;">
+                            <label>Question Text</label>
+                            <textarea name="question_text" id="question_text" rows="3"></textarea>
+                        </div>
+
+                        <!-- Question Image (Hidden for Beginner, shown for Intermediate/Advance; optional) -->
+                        <div class="input-group quiz-field" id="question-image-section" style="display: none;">
+                            <label>Question Image</label>
+                            <input type="file" name="question_image" id="question_image" accept="image/*">
+                            <div id="question-image-preview" style="margin-top: 10px; display: none;">
+                                <p style="font-size: 0.9rem; color: #666; margin-bottom: 5px;">Current image:</p>
+                                <img id="question-image-preview-img" src="" alt="Current question image" style="max-width: 200px; max-height: 200px; border: 1px solid #ddd; border-radius: 4px;">
+                            </div>
+                            <small style="display: block; margin-top: 5px; color: #666;">Optional for all levels. Leave empty to keep current image.</small>
+                        </div>
+
+                        <!-- Advance-only: Option format selector -->
+                        <div class="input-group quiz-field" id="option-format-section" style="display: none;">
+                            <label>Options Format (Advance only)</label>
+                            <select id="option_format">
+                                <option value="text">Text only</option>
+                                <option value="images">Images only</option>
+                            </select>
+                        </div>
+
+                        <!-- Option 1 Text (Hidden for Beginner, shown for Intermediate/Advance/Advance-text/both) -->
+                        <div class="input-group quiz-field" id="option1-text-section" style="display: none;">
+                            <label>Option 1 Text <span style="color: red;">*</span></label>
+                            <input type="text" name="option1_text" id="option1_text">
+                        </div>
+                        <!-- Option 1 Image (Shown for Beginner/Advance, hidden for Intermediate) -->
+                        <div class="input-group quiz-field" id="option1-image-section" style="display: none;">
+                            <label>Option 1 Image <span style="color: red;">*</span></label>
+                            <input type="file" name="option1_image" id="option1_image" accept="image/*">
+                            <div id="option1-image-preview" style="margin-top: 10px; display: none;">
+                                <p style="font-size: 0.9rem; color: #666; margin-bottom: 5px;">Current image:</p>
+                                <img id="option1-image-preview-img" src="" alt="Current option 1 image" style="max-width: 200px; max-height: 200px; border: 1px solid #ddd; border-radius: 4px;">
+                            </div>
+                            <small style="display: block; margin-top: 5px; color: #666;">Leave empty to keep current image.</small>
+                        </div>
+
+                        <!-- Option 2 Text (Hidden for Beginner, shown for Intermediate/Advance) -->
+                        <div class="input-group quiz-field" id="option2-text-section" style="display: none;">
+                            <label>Option 2 Text <span style="color: red;">*</span></label>
+                            <input type="text" name="option2_text" id="option2_text">
+                        </div>
+                        <!-- Option 2 Image (Shown for Beginner/Advance, hidden for Intermediate) -->
+                        <div class="input-group quiz-field" id="option2-image-section" style="display: none;">
+                            <label>Option 2 Image <span style="color: red;">*</span></label>
+                            <input type="file" name="option2_image" id="option2_image" accept="image/*">
+                            <div id="option2-image-preview" style="margin-top: 10px; display: none;">
+                                <p style="font-size: 0.9rem; color: #666; margin-bottom: 5px;">Current image:</p>
+                                <img id="option2-image-preview-img" src="" alt="Current option 2 image" style="max-width: 200px; max-height: 200px; border: 1px solid #ddd; border-radius: 4px;">
+                            </div>
+                            <small style="display: block; margin-top: 5px; color: #666;">Leave empty to keep current image.</small>
+                        </div>
+
+                        <!-- Option 3 Text (Hidden for Beginner, shown for Intermediate/Advance) -->
+                        <div class="input-group quiz-field" id="option3-text-section" style="display: none;">
+                            <label>Option 3 Text <span style="color: red;">*</span></label>
+                            <input type="text" name="option3_text" id="option3_text">
+                        </div>
+                        <!-- Option 3 Image (Shown for Beginner/Advance, hidden for Intermediate) -->
+                        <div class="input-group quiz-field" id="option3-image-section" style="display: none;">
+                            <label>Option 3 Image <span style="color: red;">*</span></label>
+                            <input type="file" name="option3_image" id="option3_image" accept="image/*">
+                            <div id="option3-image-preview" style="margin-top: 10px; display: none;">
+                                <p style="font-size: 0.9rem; color: #666; margin-bottom: 5px;">Current image:</p>
+                                <img id="option3-image-preview-img" src="" alt="Current option 3 image" style="max-width: 200px; max-height: 200px; border: 1px solid #ddd; border-radius: 4px;">
+                            </div>
+                            <small style="display: block; margin-top: 5px; color: #666;">Leave empty to keep current image.</small>
+                        </div>
+
+                        <!-- Option 4 Text (Hidden for Beginner, shown for Intermediate/Advance) -->
+                        <div class="input-group quiz-field" id="option4-text-section" style="display: none;">
+                            <label>Option 4 Text <span style="color: red;">*</span></label>
+                            <input type="text" name="option4_text" id="option4_text">
+                        </div>
+                        <!-- Option 4 Image (Shown for Beginner/Advance, hidden for Intermediate) -->
+                        <div class="input-group quiz-field" id="option4-image-section" style="display: none;">
+                            <label>Option 4 Image <span style="color: red;">*</span></label>
+                            <input type="file" name="option4_image" id="option4_image" accept="image/*">
+                            <div id="option4-image-preview" style="margin-top: 10px; display: none;">
+                                <p style="font-size: 0.9rem; color: #666; margin-bottom: 5px;">Current image:</p>
+                                <img id="option4-image-preview-img" src="" alt="Current option 4 image" style="max-width: 200px; max-height: 200px; border: 1px solid #ddd; border-radius: 4px;">
+                            </div>
+                            <small style="display: block; margin-top: 5px; color: #666;">Leave empty to keep current image.</small>
+                        </div>
+
+                        <!-- Correct Option (Hidden until level selected) -->
+                        <div class="input-group quiz-field" id="correct-option-section" style="display: none;">
+                            <label>Correct Option <span style="color: red;">*</span></label>
+                            <select name="correct_option" id="correct_option">
+                                <option value="">Select</option>
+                                <option value="1">Option 1</option>
+                                <option value="2">Option 2</option>
+                                <option value="3">Option 3</option>
+                                <option value="4">Option 4</option>
+                            </select>
+                        </div>
+
+                        <!-- Submit Buttons (Hidden until level selected) -->
+                        <div class="form-buttons quiz-field" id="submit-buttons" style="display: none;">
+                            <button type="submit" class="btn-dark" id="quizSubmitBtn">Add Quiz</button>
+                            <button type="button" class="btn-dark" onclick="clearQuizForm()">Clear Form</button>
+                        </div>
+                    </div>
+                </form>
+            </section>
+
+            <style>
+                .quiz-field {
+                    transition: opacity 0.3s ease;
+                }
+            </style>
+            <script>
+                let isEditMode = false; // Track if we're in edit mode
+
+                function showFieldsForLevel(level, preserveValues = false) {
+                    // Hide all quiz fields first
+                    const allFields = document.querySelectorAll('.quiz-field');
+                    allFields.forEach(field => {
+                        field.style.display = 'none';
+                    });
+
+                    // Reset all required flags
+                    const questionText = document.getElementById('question_text');
+                    const questionImage = document.getElementById('question_image');
+                    const optionTexts = [
+                        document.getElementById('option1_text'),
+                        document.getElementById('option2_text'),
+                        document.getElementById('option3_text'),
+                        document.getElementById('option4_text')
+                    ];
+                    const optionImages = [
+                        document.getElementById('option1_image'),
+                        document.getElementById('option2_image'),
+                        document.getElementById('option3_image'),
+                        document.getElementById('option4_image')
+                    ];
+                    const correctOption = document.getElementById('correct_option');
+                    const optionFormatSection = document.getElementById('option-format-section');
+                    const optionFormatSelect = document.getElementById('option_format');
+
+                    // Reset required flags
+                    questionText.required = false;
+                    questionImage.required = false;
+                    optionTexts.forEach(i => i.required = false);
+                    optionImages.forEach(i => i.required = false);
+                    correctOption.required = false;
+
+                    if (!level) {
+                        if (optionFormatSection) optionFormatSection.style.display = 'none';
+                        return; // No level selected, keep everything hidden
+                    }
+
+                    // Always show question section (optional) and correct option
+                    document.getElementById('question-section').style.display = 'block';
+                    document.getElementById('correct-option-section').style.display = 'block';
+                    document.getElementById('submit-buttons').style.display = 'block';
+                    correctOption.required = true;
+
+                    if (level === 'Beginner') {
+                        // Beginner: Question text + Option images only (no question image, no option texts)
+                        document.getElementById('option1-image-section').style.display = 'block';
+                        document.getElementById('option2-image-section').style.display = 'block';
+                        document.getElementById('option3-image-section').style.display = 'block';
+                        document.getElementById('option4-image-section').style.display = 'block';
+                        
+                        optionImages.forEach(i => {
+                            i.required = true;
+                            if (!preserveValues) {
+                                i.value = ''; // Only clear if not preserving values
+                            }
+                        });
+                        if (!preserveValues) {
+                            optionTexts.forEach(i => {
+                                i.value = ''; // Clear text values
+                            });
+                            questionImage.value = ''; // Clear question image
+                        }
+
+                        if (optionFormatSection) optionFormatSection.style.display = 'none';
+
+                    } else if (level === 'Intermediate') {
+                        // Intermediate: Question text + Question image (optional) + Option texts only (no option images)
+                        document.getElementById('question-image-section').style.display = 'block';
+                        document.getElementById('option1-text-section').style.display = 'block';
+                        document.getElementById('option2-text-section').style.display = 'block';
+                        document.getElementById('option3-text-section').style.display = 'block';
+                        document.getElementById('option4-text-section').style.display = 'block';
+                        
+                        optionTexts.forEach(i => {
+                            i.required = true;
+                        });
+                        if (!preserveValues) {
+                            optionImages.forEach(i => {
+                                i.value = ''; // Clear option images
+                            });
+                        }
+
+                    } else if (level === 'Advance') {
+                        // Advance: allow admin to choose format (text / images)
+                        document.getElementById('question-image-section').style.display = 'block';
+
+                        if (optionFormatSection) optionFormatSection.style.display = 'block';
+                        const format = optionFormatSelect ? (optionFormatSelect.value || 'text') : 'text';
+
+                        if (format === 'text') {
+                            // Text-only options
+                            document.getElementById('option1-text-section').style.display = 'block';
+                            document.getElementById('option2-text-section').style.display = 'block';
+                            document.getElementById('option3-text-section').style.display = 'block';
+                            document.getElementById('option4-text-section').style.display = 'block';
+
+                            optionTexts.forEach(i => {
+                                i.required = true;
+                            });
+
+                            // Hide image sections
+                            document.getElementById('option1-image-section').style.display = 'none';
+                            document.getElementById('option2-image-section').style.display = 'none';
+                            document.getElementById('option3-image-section').style.display = 'none';
+                            document.getElementById('option4-image-section').style.display = 'none';
+                            optionImages.forEach(i => (i.required = false));
+                        } else if (format === 'images') {
+                            // Image-only options
+                            document.getElementById('option1-image-section').style.display = 'block';
+                            document.getElementById('option2-image-section').style.display = 'block';
+                            document.getElementById('option3-image-section').style.display = 'block';
+                            document.getElementById('option4-image-section').style.display = 'block';
+
+                            optionImages.forEach(i => {
+                                i.required = true;
+                            });
+
+                            // Hide text sections
+                            document.getElementById('option1-text-section').style.display = 'none';
+                            document.getElementById('option2-text-section').style.display = 'none';
+                            document.getElementById('option3-text-section').style.display = 'none';
+                            document.getElementById('option4-text-section').style.display = 'none';
+                            optionTexts.forEach(i => (i.required = false));
+                        }
+                    }
+                }
+
+                function applyLevelRules() {
+                    const level = document.getElementById('level').value;
+                    // Only preserve values if we're in edit mode
+                    showFieldsForLevel(level, isEditMode);
+                }
+
+                document.addEventListener('DOMContentLoaded', function() {
+                    const levelSelect = document.getElementById('level');
+                    levelSelect.addEventListener('change', applyLevelRules);
+
+                    const optionFormatSelect = document.getElementById('option_format');
+                    if (optionFormatSelect) {
+                        optionFormatSelect.addEventListener('change', function () {
+                            const level = document.getElementById('level').value;
+                            if (level === 'Advance') {
+                                showFieldsForLevel(level);
+                            }
+                        });
+                    }
+                    
+                    // Initially hide all fields
+                    showFieldsForLevel('');
+
+                    const editButtons = document.querySelectorAll('.edit-btn');
+                    editButtons.forEach(button => {
+                        button.addEventListener('click', function() {
+                            editQuiz(this.dataset);
+                        });
+                    });
+
+                    // Add file input change handlers to show previews of newly selected files
+                    document.getElementById('question_image').addEventListener('change', function(e) {
+                        const file = e.target.files[0];
+                        const previewDiv = document.getElementById('question-image-preview');
+                        const previewImg = document.getElementById('question-image-preview-img');
+                        if (file) {
+                            const reader = new FileReader();
+                            reader.onload = function(e) {
+                                previewImg.src = e.target.result;
+                                previewDiv.style.display = 'block';
+                            };
+                            reader.readAsDataURL(file);
+                        } else {
+                            // If file input cleared, show existing image if any
+                            const existingImg = document.getElementById('existing_question_image').value;
+                            if (existingImg) {
+                                previewImg.src = existingImg;
+                                previewDiv.style.display = 'block';
+                            } else {
+                                previewDiv.style.display = 'none';
+                            }
+                        }
+                    });
+
+                    // Option image preview handlers
+                    ['option1', 'option2', 'option3', 'option4'].forEach(optNum => {
+                        const fileInput = document.getElementById(`${optNum}_image`);
+                        const previewDiv = document.getElementById(`${optNum}-image-preview`);
+                        const previewImg = document.getElementById(`${optNum}-image-preview-img`);
+                        const existingInput = document.getElementById(`existing_${optNum}_image`);
+
+                        fileInput.addEventListener('change', function(e) {
+                            const file = e.target.files[0];
+                            if (file) {
+                                const reader = new FileReader();
+                                reader.onload = function(e) {
+                                    previewImg.src = e.target.result;
+                                    previewDiv.style.display = 'block';
+                                };
+                                reader.readAsDataURL(file);
+                            } else {
+                                // If file input cleared, show existing image if any
+                                const existingImg = existingInput.value;
+                                if (existingImg) {
+                                    previewImg.src = existingImg;
+                                    previewDiv.style.display = 'block';
+                                } else {
+                                    previewDiv.style.display = 'none';
+                                }
+                            }
+                        });
+                    });
+                });
+
+                function editQuiz(data) {
+                    isEditMode = true;
+                    
+                    // Set basic fields
+                    document.getElementById('quiz_id').value = data.id;
+                    document.getElementById('level').value = data.level;
+                    document.getElementById('question_text').value = data.question_text || '';
+                    document.getElementById('existing_question_image').value = data.question_image || '';
+
+                    // Set option texts
+                    document.getElementById('option1_text').value = data.option1_text || '';
+                    document.getElementById('option2_text').value = data.option2_text || '';
+                    document.getElementById('option3_text').value = data.option3_text || '';
+                    document.getElementById('option4_text').value = data.option4_text || '';
+
+                    // Set existing image paths (for backend to keep if no new file uploaded)
+                    document.getElementById('existing_option1_image').value = data.option1_image || '';
+                    document.getElementById('existing_option2_image').value = data.option2_image || '';
+                    document.getElementById('existing_option3_image').value = data.option3_image || '';
+                    document.getElementById('existing_option4_image').value = data.option4_image || '';
+
+                    document.getElementById('correct_option').value = data.correct_option;
+
+                    // For Advance level, determine format based on existing data
+                    if (data.level === 'Advance') {
+                        const optionFormatSelect = document.getElementById('option_format');
+                        // Check if we have text options or image options
+                        const hasTextOptions = data.option1_text || data.option2_text || data.option3_text || data.option4_text;
+                        const hasImageOptions = data.option1_image || data.option2_image || data.option3_image || data.option4_image;
+                        
+                        if (hasTextOptions && !hasImageOptions) {
+                            optionFormatSelect.value = 'text';
+                        } else if (hasImageOptions && !hasTextOptions) {
+                            optionFormatSelect.value = 'images';
+                        } else {
+                            // Default to text if both exist (shouldn't happen but handle it)
+                            optionFormatSelect.value = 'text';
+                        }
+                    }
+
+                    // Show fields based on level (preserve values)
+                    showFieldsForLevel(data.level, true);
+
+                    // Show image previews for existing images
+                    if (data.question_image) {
+                        const previewDiv = document.getElementById('question-image-preview');
+                        const previewImg = document.getElementById('question-image-preview-img');
+                        previewImg.src = data.question_image;
+                        previewDiv.style.display = 'block';
+                    }
+
+                    if (data.option1_image) {
+                        const previewDiv = document.getElementById('option1-image-preview');
+                        const previewImg = document.getElementById('option1-image-preview-img');
+                        previewImg.src = data.option1_image;
+                        previewDiv.style.display = 'block';
+                    }
+                    if (data.option2_image) {
+                        const previewDiv = document.getElementById('option2-image-preview');
+                        const previewImg = document.getElementById('option2-image-preview-img');
+                        previewImg.src = data.option2_image;
+                        previewDiv.style.display = 'block';
+                    }
+                    if (data.option3_image) {
+                        const previewDiv = document.getElementById('option3-image-preview');
+                        const previewImg = document.getElementById('option3-image-preview-img');
+                        previewImg.src = data.option3_image;
+                        previewDiv.style.display = 'block';
+                    }
+                    if (data.option4_image) {
+                        const previewDiv = document.getElementById('option4-image-preview');
+                        const previewImg = document.getElementById('option4-image-preview-img');
+                        previewImg.src = data.option4_image;
+                        previewDiv.style.display = 'block';
+                    }
+
+                    // Switch form to update mode
+                    document.getElementById('quizForm').action = '/update_quiz';
+                    document.getElementById('quizSubmitBtn').textContent = 'Update Quiz';
+
+                    document.querySelector('.add-section-card').scrollIntoView({ behavior: 'smooth' });
+                }
+
+                function clearQuizForm() {
+                    isEditMode = false;
+                    document.getElementById('quizForm').reset();
+                    document.getElementById('quiz_id').value = '';
+                    document.getElementById('existing_question_image').value = '';
+                    document.getElementById('existing_option1_image').value = '';
+                    document.getElementById('existing_option2_image').value = '';
+                    document.getElementById('existing_option3_image').value = '';
+                    document.getElementById('existing_option4_image').value = '';
+                    document.getElementById('quizForm').action = '/add_quiz';
+                    document.getElementById('quizSubmitBtn').textContent = 'Add Quiz';
+                    
+                    // Hide all image previews
+                    document.getElementById('question-image-preview').style.display = 'none';
+                    document.getElementById('option1-image-preview').style.display = 'none';
+                    document.getElementById('option2-image-preview').style.display = 'none';
+                    document.getElementById('option3-image-preview').style.display = 'none';
+                    document.getElementById('option4-image-preview').style.display = 'none';
+                    
+                    // Reset option format selector
+                    const optionFormatSelect = document.getElementById('option_format');
+                    if (optionFormatSelect) {
+                        optionFormatSelect.value = 'text';
+                    }
+                    
+                    // Hide all fields and reset
+                    showFieldsForLevel('');
+                }
+            </script>
+
+            <footer class="main-footer">
+                <p>&copy; 2025 GestureLab. All rights reserved.</p>
+            </footer>
+        </main>
+    </div>
+</body>
+</html>
+

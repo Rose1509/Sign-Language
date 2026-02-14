@@ -35,7 +35,7 @@
                 </div>
                 <span>Practice</span>
             </a>
-            <a href="/quizzes" class="nav-item">
+            <a href="/add_quizzes" class="nav-item">
                 <div class="icon-container">
                     <img src="/static/images/quizzes.png" alt="Quizzes" class="nav-icon">
                 </div>
@@ -49,7 +49,7 @@
             </a>
         </div>
 
-        <a href="/login" class="action-btn" aria-label="Logout">
+        <a href="/logout" class="action-btn" aria-label="Logout" onclick="return confirm('Are you sure you want to logout?')">
             <div class="arrow-box">
                 <img src="/static/images/log-out.png" alt="Logout" class="arrow-icon">
             </div>
@@ -70,67 +70,33 @@
         </nav>
 
         <section class="lesson-grid">
-            <div class="card">
-                <div class="card-header">
-                    <h2>Aa</h2>
+            {% if lessons %}
+                {% for lesson in lessons %}
+                <div class="card">
+                    <div class="card-header">
+                        <h2>{{ lesson.name }}</h2>
+                    </div>
+                    <div class="card-body">
+                        <img src="{{ lesson.image }}" alt="Sign for {{ lesson.name }}" class="sign-img">
+                        <h3>{{ lesson.heading }}</h3>
+                        <ol>
+                            {% set steps = lesson.description.split('\n') %}
+                            {% for step in steps %}
+                                {% if step.strip() %}
+                                    <li>{{ step.strip() }}</li>
+                                {% endif %}
+                            {% endfor %}
+                        </ol>
+                        <button class="btn-practice">Start Practice Now</button>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <img src="https://via.placeholder.com/150x180?text=Sign+Image" alt="Sign for A" class="sign-img">
-                    
-                    <h3>How to sign</h3>
-                    <ol>
-                        <li>Make a fist with your dominant hand.</li>
-                        <li>Keep your thumb on the side of your fingers, not sticking out.</li>
-                        <li>Ensure your fingers are curled tightly into your palm.</li>
-                        <li>Palm faces outward (toward the person you are signing to).</li>
-                        <li>Keep your hand steady while signing.</li>
-                    </ol>
-
-                    <button class="btn-practice">Start Practice Now</button>
+                {% endfor %}
+            {% else %}
+                <div style="grid-column: 1 / -1; text-align: center; padding: 2rem;">
+                    <p>No intermediate lessons available yet. Please check back later!</p>
                 </div>
-            </div>
-
-            <div class="card">
-                <div class="card-header">
-                    <h2>Aa</h2>
-                </div>
-                <div class="card-body">
-                    <img src="https://via.placeholder.com/150x180?text=Sign+Image" alt="Sign for A" class="sign-img">
-                    
-                    <h3>How to sign</h3>
-                    <ol>
-                        <li>Make a fist with your dominant hand.</li>
-                        <li>Keep your thumb on the side of your fingers, not sticking out.</li>
-                        <li>Ensure your fingers are curled tightly into your palm.</li>
-                        <li>Palm faces outward (toward the person you are signing to).</li>
-                        <li>Keep your hand steady while signing.</li>
-                    </ol>
-
-                    <button class="btn-practice">Start Practice Now</button>
-                </div>
-            </div>
-            
-            <div class="card">
-                <div class="card-header">
-                    <h2>Aa</h2>
-                </div>
-                <div class="card-body">
-                    <img src="https://via.placeholder.com/150x180?text=Sign+Image" alt="Sign for A" class="sign-img">
-                    
-                    <h3>How to sign</h3>
-                    <ol>
-                        <li>Make a fist with your dominant hand.</li>
-                        <li>Keep your thumb on the side of your fingers, not sticking out.</li>
-                        <li>Ensure your fingers are curled tightly into your palm.</li>
-                        <li>Palm faces outward (toward the person you are signing to).</li>
-                        <li>Keep your hand steady while signing.</li>
-                    </ol>
-
-                    <button class="btn-practice">Start Practice Now</button>
-                </div>
-            </div>            
-
-            </section>
+            {% endif %}
+        </section>
     </main>
 
     <footer class="main-footer">

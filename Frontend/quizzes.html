@@ -48,7 +48,7 @@
             </a>
         </div>
 
-        <a href="/login" class="action-btn" aria-label="Logout">
+        <a href="/logout" class="action-btn" aria-label="Logout" onclick="return confirm('Are you sure you want to logout?')">
             <div class="arrow-box">
                 <img src="/static/images/log-out.png" alt="Logout" class="arrow-icon">
             </div>
@@ -63,32 +63,35 @@
 
         <section class="quiz-content">
             <h2 class="list-title">Quiz Lists</h2>
-            
+
             <div class="card-grid">
+                <!-- Beginner card -->
                 <div class="quiz-card">
                     <div class="card-image">
                         <img src="/static/images/hello.png" alt="Alphabet A-I">
                     </div>
                     <h3>The Alphabet Basics</h3>
-                    <span class="level">Beginner</span>
-                    <a href="/beginner" class="btn-start">Start Quiz</a>                
+                    <span class="level">Beginner ({{ beginner_count or 0 }} quizzes)</span>
+                    <a href="/beginner" class="btn-start">Start Quiz</a>
                 </div>
 
+                <!-- Intermediate card -->
                 <div class="quiz-card">
                     <div class="card-image">
                         <img src="/static/images/hello.png" alt="Alphabet J-T">
                     </div>
                     <h3>The Alphabet Basics</h3>
-                    <span class="level">Intermediate</span>
+                    <span class="level">Intermediate ({{ intermediate_count or 0 }} quizzes)</span>
                     <a href="/intermediate" class="btn-start">Start Quiz</a>
                 </div>
 
+                <!-- Advance card -->
                 <div class="quiz-card">
                     <div class="card-image">
                         <img src="/static/images/hello.png" alt="Alphabet U-Z">
                     </div>
                     <h3>The Alphabet Basics</h3>
-                    <span class="level">Advance</span>
+                    <span class="level">Advance ({{ advance_count or 0 }} quizzes)</span>
                     <a href="/advance" class="btn-start">Start Quiz</a>
                 </div>
             </div>

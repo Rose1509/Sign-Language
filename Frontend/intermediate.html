@@ -34,7 +34,7 @@
                 </div>
                 <span>Practice</span>
             </a>
-            <a href="/quizzes" class="nav-item active">
+            <a href="/add_quizzes" class="nav-item active">
                 <div class="icon-container">
                     <img src="/static/images/quizzes.png" alt="Quizzes" class="nav-icon">
                 </div>
@@ -48,7 +48,7 @@
             </a>
         </div>
 
-        <a href="/login" class="action-btn" aria-label="Logout">
+        <a href="/logout" class="action-btn" aria-label="Logout" onclick="return confirm('Are you sure you want to logout?')">
             <div class="arrow-box">
                 <img src="/static/images/log-out.png" alt="Logout" class="arrow-icon">
             </div>
@@ -62,61 +62,57 @@
             </a>
             <div class="quiz-info">
                 <h1>Quiz: The Alphabet Basics</h1>
-                <p class="quiz-meta">Level: Intermediate <span class="total-q">Total Questions: 10</span></p>
+                <p class="quiz-meta">
+                    Level: Intermediate
+                    <span class="total-q">Total Questions: {{ quizzes|length or 0 }}</span>
+                </p>
             </div>
         </header>
 
         <form id="quiz-form">
-            <div class="question-card">
-                <p class="question-text">1. What letter is being shown in this image?</p>
-                <div class="prompt-image">
-                    <img src="/static/images/sign-h.png" alt="Hand Sign">
-                </div>
-                <div class="options-grid text-options">
-                    <label class="option">
-                        <input type="radio" name="q1" value="h">
-                        <span class="prefix">A</span> h
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q1" value="f">
-                        <span class="prefix">B</span> f
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q1" value="g">
-                        <span class="prefix">C</span> g
-                    </label>
-                    <label class="option">
-                        <input type="radio" name="q1" value="a">
-                        <span class="prefix">D</span> A
-                    </label>
-                </div>
-            </div>
+            {% if quizzes %}
+                {% for quiz in quizzes %}
+                <div class="question-card">
+                    <p class="question-text">
+                        {{ loop.index }}.
+                        {% if quiz.question_text %}
+                            {{ quiz.question_text }}
+                        {% else %}
+                            Choose the correct answer.
+                        {% endif %}
+                    </p>
 
-            <div class="question-card">
-                <p class="question-text">2. Which of the following is the sign for the letter 'D'?</p>
-                <div class="options-grid image-options">
-                    <label class="option-img">
-                        <input type="radio" name="q2" value="a">
-                        <span class="prefix">A</span>
-                        <img src="/static/images/sign-d.png" alt="Option A">
-                    </label>
-                    <label class="option-img">
-                        <input type="radio" name="q2" value="b">
-                        <span class="prefix">B</span>
-                        <img src="/static/images/sign-b.png" alt="Option B">
-                    </label>
-                    <label class="option-img">
-                        <input type="radio" name="q2" value="c">
-                        <span class="prefix">C</span>
-                        <img src="/static/images/sign-c.png" alt="Option C">
-                    </label>
-                    <label class="option-img">
-                        <input type="radio" name="q2" value="d">
-                        <span class="prefix">D</span>
-                        <img src="/static/images/sign-e.png" alt="Option D">
-                    </label>
+                    {% if quiz.question_image %}
+                    <div class="prompt-image">
+                        <img src="{{ quiz.question_image }}" alt="Question image">
+                    </div>
+                    {% endif %}
+
+                    <div class="options-grid text-options">
+                        <label class="option">
+                            <input type="radio" name="q{{ loop.index }}" value="1">
+                            <span class="prefix">A</span> {{ quiz.option1_text or '' }}
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q{{ loop.index }}" value="2">
+                            <span class="prefix">B</span> {{ quiz.option2_text or '' }}
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q{{ loop.index }}" value="3">
+                            <span class="prefix">C</span> {{ quiz.option3_text or '' }}
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q{{ loop.index }}" value="4">
+                            <span class="prefix">D</span> {{ quiz.option4_text or '' }}
+                        </label>
+                    </div>
                 </div>
-            </div>
+                {% endfor %}
+            {% else %}
+                <p style="text-align: center; margin-top: 2rem;">
+                    No intermediate quizzes available yet. Please check back later.
+                </p>
+            {% endif %}
 
             <div class="submit-container">
                 <button type="submit" class="submit-btn">Submit</button>
